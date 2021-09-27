@@ -79,7 +79,7 @@ class Agent:
         states, actions, rewards_states, dones = zip(*mini_sample)    
         self.trainer.train_step(states,actions,rewards,next_states, dones)
     
-    def train_short_memory((self, state, action, reward, next_state, done):
+    def train_short_memory(self, state, action, reward, next_state, done):
         self.trainer.train_step( state, action, reward, next_state, done)
     
     def get_action(self, state):
