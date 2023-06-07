@@ -24,11 +24,10 @@ python3 trainer.py
 
 ## Upcoming Improvements
 
-```python
-TODO: Demo from checkpoint
-TODO: GUI Web app demo
-TODO: Add double DQN trainer
-```
+TODO:
+- Demo from checkpoint
+- GUI Web app demo
+- Add double DQN trainer
 
 ## Contributing
 
