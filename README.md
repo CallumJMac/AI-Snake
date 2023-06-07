@@ -46,3 +46,7 @@ Please make sure to update tests as appropriate.
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Credit
+
+To [Patrick Loebar](https://github.com/patrickloeber) for the starter code. My intention for this project is to refactor the starter code and to extend the project with a GUI and more sophisticated DRL methods. As you can see by my activity, this is an ongoing project (as of June 2023).

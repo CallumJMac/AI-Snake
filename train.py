@@ -1,18 +1,19 @@
-import torch
-import random
 import numpy as np
-from collections import deque
-from game import SnakeGameAI, Direction, Point
-from model import Linear_QNet, QTrainer
-from plotter import plot
+from game import SnakeGameAI
+from plot import plot
 from agent import Agent
 
 
 def train():
-    plot_scores = []
-    plot_mean_scores = []
-    total_score = 0
+    "Train the Q-Learning Agent to play the snake game"
+    plot_scores = [] #for plotting
+    plot_mean_scores = [] #for plotting
+
+    #init values
+    total_score = 0 
     record = 0
+
+    #instantiate agent and snakegame objects
     agent = Agent()
     game = SnakeGameAI()
     while True:
@@ -29,7 +30,7 @@ def train():
         # train short memory
         agent.train_short_memory(state_old, final_move, reward, state_new, done)
 
-        # remember
+        # store all the (state, action) pairs in the deque
         agent.remember(state_old, final_move, reward, state_new, done)
 
         if done:
@@ -40,7 +41,7 @@ def train():
 
             if score > record:
                 record = score
-                agent.model.save()
+                agent.model.save(file_name=f"{score}.pth") #save only if better than hiscore for demo
 
             print('Game', agent.n_games, 'Score', score, 'Record:', record)
 

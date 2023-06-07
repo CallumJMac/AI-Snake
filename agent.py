@@ -2,15 +2,18 @@ import torch
 import random
 import numpy as np
 from collections import deque
-from game import SnakeGameAI, Direction, Point
+from game import Direction, Point
 from model import Linear_QNet, QTrainer
-from plotter import plot
+from plot import plot
 
-MAX_MEMORY = 100_000
+#Hyperparameters
+MAX_MEMORY = 100_000 #max values in the deque
 BATCH_SIZE = 1000
-LR = 0.001
+LR = 0.001 #learning rate
 
 class Agent:
+    """Deep Q-Learning Agent for Snake Game"""
+
     def __init__(self):
         self.n_games = 0
         self.epsilon = 0 # randomness
@@ -20,12 +23,29 @@ class Agent:
         self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
 
     def get_state(self, game):
-        head = game.snake[0]
+        """
+        Get the state for the agent at each timestep of the snake game.
+        
+        type(state): list
+        len(state): 11
+
+        [danger straight, danger right, danger left
+
+        direction left, direction right
+        direction up, direction down
+        
+        food left, food right,
+        food up, food down]
+
+        """
+        
+        head = game.snake[0] #first item of list is head coords
         point_l = Point(head.x - 20, head.y)
         point_r = Point(head.x + 20, head.y)
         point_u = Point(head.x, head.y - 20)
         point_d = Point(head.x, head.y + 20)
-        
+
+        #bool: only one of the directions == 1, rest == 0
         dir_l = game.direction == Direction.LEFT
         dir_r = game.direction == Direction.RIGHT
         dir_u = game.direction == Direction.UP
@@ -50,34 +70,37 @@ class Agent:
             (dir_r and game.is_collision(point_u)) or 
             (dir_l and game.is_collision(point_d)),
             
-            # Move direction
+            # Move direction (only one variable ==1)
             dir_l,
             dir_r,
             dir_u,
             dir_d,
             
-            # Food location 
+            # Food location (bool: True or False)
             game.food.x < game.head.x,  # food left
             game.food.x > game.head.x,  # food right
             game.food.y < game.head.y,  # food up
             game.food.y > game.head.y  # food down
             ]
 
-        return np.array(state, dtype=int)
+        return np.array(state, dtype=int) #dtype=int to convert True -> 1 bool
 
     def remember(self, state, action, reward, next_state, done):
         self.memory.append((state, action, reward, next_state, done)) # popleft if MAX_MEMORY is reached
 
     def train_long_memory(self):
+        "Train using up to BATCH_SIZE samples from memory"
         if len(self.memory) > BATCH_SIZE:
             mini_sample = random.sample(self.memory, BATCH_SIZE) # list of tuples
         else:
             mini_sample = self.memory
 
+        #iteratively extract variables from mini_sample (without for loop)
         states, actions, rewards, next_states, dones = zip(*mini_sample)
         self.trainer.train_step(states, actions, rewards, next_states, dones)
         
     def train_short_memory(self, state, action, reward, next_state, done):
+        "Train with only one step"
         self.trainer.train_step(state, action, reward, next_state, done)
 
     def get_action(self, state):
