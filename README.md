@@ -11,15 +11,23 @@ The DRL methods used to train the agent is Deep Q-Learning.
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
 ```bash
-conda create -n ai-snake
-conda activate ai-snake
+python3 -m venv ai-snake
+source ai-snake/bin/activate
 pip install -r requirements.txt
 ```
-
-## Usage
+## Useage
 
 ```python
-TBC Web App Demo
+python3 trainer.py
+```
+
+
+## Upcoming Improvements
+
+```python
+TODO: Demo from checkpoint
+TODO: GUI Web app demo
+TODO: Add double DQN trainer
 ```
 
 ## Contributing
