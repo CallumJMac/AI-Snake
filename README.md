@@ -8,11 +8,16 @@ The DRL methods used to train the agent is Deep Q-Learning.
 
 ## Installation
 
+*Step 1: Install Conda:*
+- Download and install Conda by following the instructions for your operating system from the official Conda website: https://docs.conda.io/en/latest/miniconda.html
+
+*Step 2: Create a new Conda environment:*
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
 ```bash
-python3 -m venv ai-snake
-source ai-snake/bin/activate
+pip install virtualenv
+virtualenv ai-snake
+ai-snake/bin/activate
 pip install -r requirements.txt
 ```
 ## Useage
@@ -21,6 +26,12 @@ pip install -r requirements.txt
 python3 trainer.py
 ```
 
+## Deactivate the environment:
+
+To deactivate the current environment, use the following command:
+```python
+deactivate
+```
 
 ## Upcoming Improvements
 
