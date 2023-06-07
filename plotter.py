@@ -5,7 +5,6 @@ plt.ion()
 
 def plot(scores, mean_scores):
     "Function to display visualisations when training."
-
     
     display.clear_output(wait=True)
     display.display(plt.gcf())
